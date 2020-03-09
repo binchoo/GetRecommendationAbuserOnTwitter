@@ -69,3 +69,6 @@ LOGGER_RESULT_PATH = './TweetScraper/Merge/log.txt'
 - `MERGER_RESULT_PATH` 는  취합된 트윗을 저장할 파일을 지정합니다.
 - `LOGGER_RESULT_PATH` 는 로그를 저장할 파일을 지정합니다.
 - 언급하지 않은 변수는 변경하지 않습니다.
+
+## 라이센스
+DirectiveMerger는 GNU GENERAL PUBLIC LICENSE, Version 2 라이센스 하에 배포됩니다.
