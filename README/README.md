@@ -55,7 +55,7 @@ CRAWLER_RESULT_PATH =  './TweetScraper/Data/tweet' # directory
 
 CRAWLER_QUERY = 'query="역따 filter:links"'
 
-CRAWLER_TASK_INTERVAL = 3*60*1000 # min * sec * millis
+CRAWLER_TASK_INTERVAL = 3*60 # min * sec
 
 #MERGER
 MERGER_RESULT_PATH = './TweetScraper/Merge/directives.json' # json format output file
