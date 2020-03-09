@@ -71,4 +71,4 @@ LOGGER_RESULT_PATH = './TweetScraper/Merge/log.txt'
 - 언급하지 않은 변수는 변경하지 않습니다.
 
 ## 라이센스
-DirectiveMerger는 GNU GENERAL PUBLIC LICENSE, Version 2 라이센스 하에 배포됩니다.
+DirectiveMerger는 [GNU GENERAL PUBLIC LICENSE, Version 2](https://github.com/binchoo/GetRecommendationAbuserOnTwitter/blob/master/LICENSE) 라이센스 하에 배포됩니다.
