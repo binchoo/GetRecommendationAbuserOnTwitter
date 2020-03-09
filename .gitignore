@@ -2,3 +2,5 @@ Data/
 pyenv/
 
 *.pyc
+*.json
+*.txt
