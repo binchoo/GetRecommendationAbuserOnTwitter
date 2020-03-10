@@ -1,5 +1,6 @@
 
-import settings 
+import settings
+from termcolor import colored
 from datetime import datetime
 
 class Log :
@@ -28,12 +29,12 @@ class Log :
         self.__outstream.__exit__()
         self.__outstream = None
 
-    def log(self, tag, msg) :
-        output = "[{}] {}".format(tag, msg)
+    def log(self, tag, msg, color='white') :
+        output = colored("[{}] {}".format(tag, msg), color)
         print(output)
         self.__outstream.write(output + '\n')
         return self
     
     def attach_time(self) :
-        self.log("@", datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        self.log("@", datetime.now().strftime('%Y-%m-%d %H:%M:%S'), 'green')
         return self

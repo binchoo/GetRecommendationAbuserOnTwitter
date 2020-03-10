@@ -8,9 +8,9 @@ directive_merger = merger.create_merger(settings.CRAWLER_RESULT_PATH, settings.M
 directive_remover = remover.create_remover(settings.CRAWLER_RESULT_PATH)
 
 def task() :
+        directive_remover()
         directive_crawler()
         directive_merger()
-        directive_remover()
 
 def task_looper(task, millis) :
 

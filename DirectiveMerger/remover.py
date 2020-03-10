@@ -10,6 +10,6 @@ def create_remover(target_directory) :
             os.remove(path)
 
         with Log.begin() as logger:
-            logger.log("리무버", "개별 지령이 제거되었습니다")
+            logger.log("리무버", "개별 지령이 제거되었습니다", color='red')
 
     return remover
