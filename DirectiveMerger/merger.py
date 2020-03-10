@@ -7,7 +7,6 @@ def create_merger(target_directory, output_file_path) :
     
     def merger() :
         contents = get_contents_of(target_directory)
-        cache = contents
 
         with open(output_file_path, 'w') as f :
             json.dump(contents, f, ensure_ascii=False) #이 옵션은 한글을 바로 식별할 수 있게 해준다

@@ -20,7 +20,7 @@ CRAWLER_FILTERS = " " + " ".join([
     ]
 )
 
-CRAWLER_QUERY = 'query="역따 OR 선플' + CRAWLER_FILTERS
+CRAWLER_QUERY = 'query="역따' + CRAWLER_FILTERS
 
 CRAWLER_TASK_INTERVAL = 3*60 # min * sec
 
