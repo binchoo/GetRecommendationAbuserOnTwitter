@@ -27,5 +27,7 @@ CRAWLER_TASK_INTERVAL = 3*60 # min * sec
 #MERGER
 MERGER_RESULT_PATH = './TweetScraper/Merge/directives.json' # json format output file
 
+MERGER_TEST_RESULT_PATH = './TweetScraper/Merge/test.txt'
+
 #LOGGER
 LOGGER_RESULT_PATH = './TweetScraper/Merge/log.txt' 
