@@ -55,15 +55,40 @@ class Directive :
             'targets' : self.targets,
         }
 
+class Target :
+
+    def __init__(self) :
+        self.jsonformat = None
+        self.helpkey = None
+        self.upvote = None
+        self.url = None
+        self.articleurl = None
+        self.articletitle = None
+
+    def json(self) :
+        if self.jsonformat is not None :
+            return self.jsonformat
+        else :
+            raise Exception('is not jsonated')
+
+    def jsonate(self) :
+        self.jsonformat = {
+                'helpkey' : self.helpkey,
+                'upvote' : self.upvote,
+                'url' : self.url,
+                'articleurl' : self.articleurl,
+                'articletitle' : self.articletitle,
+            }
+
 class DirectiveParser :
-    target_pattern = re.compile(r"([a-zA-Z0-9가-힣]*)(https?://[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b[-a-zA-Z0-9()@:%_\+.~#?&//=,]*)")
-    articleurl_pattern = re.compile(r"https?://.*naver.*oid=([0-9]+).*aid=([0-9]+).*")
-    
+
     @classmethod
     def parse_raws(cls, raw_directives) :
         directives = list()
         for raw_directive in raw_directives :
-            directives.append(cls.parse_raw(raw_directive))
+            directive = cls.parse_raw(raw_directive)
+            if len(directive['targets']) > 0 :
+                directives.append(directive)
         return directives
 
     @classmethod
@@ -78,7 +103,7 @@ class DirectiveParser :
         directive.director = '@' + raw_directive['usernameTweet']
         directive.datetime = raw_directive['datetime']
         directive.text = cls.__trimmer(raw_directive['text'])
-        directive.targets = cls.__extract_targets(directive.text)
+        directive.targets = TargetParser.parse(directive.text)
         
         directive.jsonate()
 
@@ -87,22 +112,53 @@ class DirectiveParser :
         trim = text.replace(" ", "").replace("\n", "")
         return trim
 
+class TargetParser :
+
+    target_pattern = re.compile(r"([a-zA-Z0-9ㄱ-ㅎ가-힣!\?\(\)]*)(https?://[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b[-a-zA-Z0-9()@:%_\+.~#?&//=,]*)")
+    articleurl_pattern = re.compile(r"https?://.*naver.*oid=([0-9]+).*aid=([0-9]+).*")
+
     @classmethod
-    def __extract_targets(cls, text) :
+    def parse(cls, text) :
+        return cls.__parse(text)
+
+    @classmethod
+    def __parse(cls, text) :
         targets = list()
         matched_target = re.findall(cls.target_pattern, text)
+        upfirst = True
         for helpkey, url in matched_target :
+            if cls.__check_url_validation(url) == True :
+                target = Target()
+                target.helpkey = helpkey
+                target.url = url
+                upfirst, target.upvote = cls.__extract_upvote(upfirst, helpkey)
+                target.articleurl = cls.__extract_article_url(url)
+                target.articletitle = cls.__extract_article_title(target.articleurl)
 
-            articleurl = cls.__extract_article_url(url)
-            articletitle = cls.__extract_article_title(articleurl)
-
-            targets.append({
-                'helpkey' : helpkey,
-                'url' : url,
-                'articleurl' : articleurl,
-                'articletitle' : articletitle,
-            })
+                target.jsonate()
+                targets.append(target.json())
         return targets
+
+    @classmethod
+    def __extract_upvote(cls, upfirstmode, helpkey) :
+        upfirst = upfirstmode
+        if upfirst :
+            if "역따" in helpkey or "신고" in helpkey or "👎" in helpkey:
+                upfirst = False
+                upvote = False
+            else :
+                upvote = True
+        else :
+            if "선플" in helpkey or "많이" in helpkey or "👍" in helpkey:
+                upfirst = True
+                upvote = True
+            else :
+                upvote = False
+        return upfirst, upvote
+
+    @classmethod
+    def __check_url_validation(cls, url) :
+        return ("naver" in url) or ("daum" in url)
 
     @classmethod
     def __extract_article_url(cls, comment_url) :
@@ -129,7 +185,6 @@ class DirectiveParser :
         for key, val in params.items() :
             querystring += "{}={}&".format(key, val)
         return domain + querystring
-
 
 class TitleParser(HTMLParser):
     def __init__(self):

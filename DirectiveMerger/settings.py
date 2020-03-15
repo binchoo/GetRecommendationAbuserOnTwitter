@@ -5,7 +5,7 @@ TODAY = datetime.today()
 
 YESTERDAY = TODAY - timedelta(days=1)
 
-SINCE = YESTERDAY
+SINCE = YESTERDAY - timedelta(days=2)
 
 #CRAWLER
 CRAWLER_ROOT_DIRECTORY = './TweetScraper/'
