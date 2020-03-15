@@ -74,16 +74,16 @@ python manage.py runserver 0.0.0.0:{port}
 
 ```json
 [{
-    "origin": 원문 링크,
-    "director": 지시자,
-    "datetime": 지시시각,
-    "text": 지시문,
+    "origin": "원문 링크",
+    "director": "지시자",
+    "datetime": "지시시각",
+    "text": "지시문",
     "targets": [{
-        "helpkey": 주석,
-        "upvote": 상따(true)|역따(false),
-        "url": 목표 링크,
-        "articleurl": 목표 기사 링크,
-        "articletitle": 목표 기사 제목
+        "helpkey": "주석",
+        "upvote": "true|false",
+        "url": "목표 링크",
+        "articleurl": "목표 기사 링크",
+        "articletitle": "목표 기사 제목"
     }, ...]
 }, ...
 ]
